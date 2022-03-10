@@ -1,2 +1,2 @@
 #!/bin/bash
-printf "%i.00" $NUM
+printf "%.2f\n" $NUM
