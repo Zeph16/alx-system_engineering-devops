@@ -1,0 +1,2 @@
+#!/bin/bash
+echo $(printf %o $(($(echo $((5#$(echo "ewwatratewa" | tr 'water' '01234'))))+$(echo $((5#$(echo "ti.itirtrtr" | tr 'stir.' '01234'))))))) | tr '01234567' 'bestchol'
