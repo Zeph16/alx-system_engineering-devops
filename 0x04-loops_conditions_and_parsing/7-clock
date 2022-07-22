@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Clock that counts from 0 hours to 12 hours and 59 mins
+min=1
+hr=0
+while [ $hr -le 12 ]
+do
+	echo "Hour: $hr"
+	while [ $min -le 59 ]
+	do
+		echo $min
+		((min++))
+	done
+	min=1
+	((hr++))
+done
