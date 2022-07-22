@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Displays the contents of /etc/passwd in a special format
+while IFS= read -r line
+do
+    echo "$line" | cut -f 1,3,6 -d ':'
+done < "/etc/passwd"
