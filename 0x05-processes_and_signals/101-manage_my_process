@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # Init script that starts, stops or restarts the manage_my_process subprocess
-. /lib/lsb/init-functions
 
 pid_file=/var/run/my_process.pid
 
