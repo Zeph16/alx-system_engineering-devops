@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Stops the "To infinity and beyond" process without using kill or killall comand
+pkill -f 7-highlander

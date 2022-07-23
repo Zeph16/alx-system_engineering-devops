@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Displays processes with the word "bash"
+pgrep -l bash
