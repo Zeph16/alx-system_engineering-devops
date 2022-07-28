@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# localhost -> 127.0.0.2 | facebook.com -> 8.8.8.8
+cp /etc/hosts ghosts
+sed -i s/^127.*/"127.0.0.2 localhost"/ ghosts
+echo "8.8.8.8 facebook.com" >> ghosts
+cp ghosts /etc/hosts
