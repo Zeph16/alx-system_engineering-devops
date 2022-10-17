@@ -1,30 +1,37 @@
 #!/usr/bin/python3
 """ Script that uses JSONPlaceholder API to get information about employee """
-import json
 import requests
 import sys
 
 
+def todojson():
+    """ function that gets todo tasks and exports data to json file """
+    r = requests.get('https://jsonplaceholder.typicode.com/users/{}'
+                     .format(sys.argv[1]))
+    new = r.json()
+    name = new.get('username')
+    userid = new.get('id')
+    r = requests.get('https://jsonplaceholder.typicode.com/users/{}/todos'
+                     .format(sys.argv[1]))
+    new = r.json()
+    size = len(new)
+    stat = []
+    titles = []
+    for i in range(0, size):
+        if new[i].get('completed'):
+            stat.append("true")
+        else:
+            stat.append("false")
+        titles.append(new[i].get('title'))
+    with open("{}.json".format(userid), 'w') as f:
+        f.write('{' + '"{}"'.format(userid)+': [')
+        for i in range(0, size - 1):
+            f.write('{{"task": "{}", "completed": {}, "username": "{}"}}, '
+                    .format(titles[i], stat[i], name))
+        f.write('{{"task": "{}", "completed": {}, "username": "{}"}}'
+                .format(titles[-1], stat[-1], name))
+        f.write(''']}''')
+
+
 if __name__ == "__main__":
-    url = 'https://jsonplaceholder.typicode.com/'
-
-    userid = sys.argv[1]
-    user = '{}users/{}'.format(url, userid)
-    res = requests.get(user)
-    json_o = res.json()
-    name = json_o.get('username')
-
-    todos = '{}todos?userId={}'.format(url, userid)
-    res = requests.get(todos)
-    tasks = res.json()
-    l_task = []
-    for task in tasks:
-        dict_task = {"task": task.get('title'),
-                     "completed": task.get('completed'),
-                     "username": name}
-        l_task.append(dict_task)
-
-    d_task = {str(userid): l_task}
-    filename = '{}.json'.format(userid)
-    with open(filename, mode='w') as f:
-        json.dump(d_task, f)
+    todojson()
