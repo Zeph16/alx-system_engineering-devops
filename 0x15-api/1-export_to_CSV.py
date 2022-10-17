@@ -4,22 +4,26 @@ import requests
 import sys
 
 
+def todocsv():
+    """ function that gets todo tasks and exports data to csv file """
+    r = requests.get('https://jsonplaceholder.typicode.com/users/{}'
+                     .format(sys.argv[1]))
+    new = r.json()
+    name = new.get('username')
+    userid = new.get('id')
+    r = requests.get('https://jsonplaceholder.typicode.com/users/{}/todos'
+                     .format(sys.argv[1]))
+    new = r.json()
+    size = len(new)
+    stat = []
+    titles = []
+    for i in range(0, size):
+        stat.append(new[i].get('completed'))
+        titles.append(new[i].get('title'))
+    with open("{}.csv".format(userid), 'w') as f:
+        for i in range(0, size):
+            f.write('"{}","{}","{}","{}"\n'.format(userid, name,
+                                                   stat[i], titles[i]))
+
 if __name__ == "__main__":
-    url = 'https://jsonplaceholder.typicode.com/'
-
-    user = '{}users/{}'.format(url, sys.argv[1])
-    res = requests.get(user)
-    json_o = res.json()
-    print("Employee {} is done with tasks".format(json_o.get('name')), end="")
-
-    todos = '{}todos?userId={}'.format(url, sys.argv[1])
-    res = requests.get(todos)
-    tasks = res.json()
-    l_task = []
-    for task in tasks:
-        if task.get('completed') is True:
-            l_task.append(task)
-
-    print("({}/{}):".format(len(l_task), len(tasks)))
-    for task in l_task:
-        print("\t {}".format(task.get("title")))
+    todocsv()
